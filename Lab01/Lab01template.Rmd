@@ -1,0 +1,70 @@
+---
+title: "LAB #1: Getting Started with R"
+subtitle: MATH B210
+author: Michael Pham
+date: 9/18/2023
+output: 
+  html_document:
+    theme: cosmo
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Instructions
+1. Read and work through the Lab 1 document.
+2. Complete the exercises below.
+3. Delete these instructions from your final R Markdown document.
+
+We’re going to use the logistic growth function to model the percentage of American with cell phone service (The World Bank, 2013).
+![Table for lab 1](Lab1fig.png)
+
+## Exercise 1
+
+Use the commands you have learned to plot the number of Americans with cell phone service from 1995 to 2012. On the $x$-axis, start with 1995 as year 0.
+```{r}
+# Type your code here (and delete these comments)
+x = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+y = c(12.69, 16.35, 20.29, 25.09, 30.81, 38.75, 45.00, 49.16, 55.15, 62.852, 68.63, 76.64, 82.47, 85.68, 89.14, 91.86, 95.28, 98.17)
+
+plot(x, y, 'l', main = "Americans with cell phones", xlab = 'year (starting 1995)', ylab = 'americans with cell phones (%)')
+# NOTE: R will not run any code after the # sign. Text after # are meant to be comments you use to explain what the code is doing. It is good practice to comment each line of code, so that you can refer back to it down the road.
+```
+<Insert any explanations/interpretations in the space after a code chunk. Delete this in your final version.>
+
+## Exercise 2
+
+Given the initial value $N_0$, intrinsic growth parameter $r$, and carrying capacity $B$, the logistic model is
+\[N(t) = \dfrac{N_0 B}{N_0 + (B-N_0)e^{-rt}}\]
+What are reasonable choices for $N_0$ and $B$? Why?
+Create variables N0 and B to reflect your choices.
+```{r}
+N_0 = 12.69
+B = 100
+```
+
+
+## Exercise 3
+
+Plot the logistic function on the same graph as the previous data using the \texttt{lines} function, in various colors (or line types), with $r=0.25,0.27,0.29,0.31$. Which is the best fit for the data?
+```{r}
+r0=0.25
+r1=0.27
+r2=0.29
+r3=0.31
+
+y = (N_0*B)/(N_0 + (B-N_0)*exp(-r0*x))
+#x1 = c(0,)
+y1 = (N_0*B)/(N_0 + (B-N_0)*exp(-r1*x1))
+
+
+```
+
+
+## Exercise 4
+
+Using your model, what percentage of Americans are expected to have cell service in 2013?
+```{r}
+# Type your code here (and delete these comments)
+```
