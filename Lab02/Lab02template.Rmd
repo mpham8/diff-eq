@@ -1,8 +1,8 @@
 ---
 title: "LAB #2: Solving Differential Equations"
 subtitle: MATH B210
-author: YOUR FULL NAME HERE
-date: INSERT DATE HERE
+author: Michael Pham
+date: 9/25/2023
 output: 
   html_document:
     theme: cosmo
@@ -10,6 +10,8 @@ output:
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library(ggplot2)
 ```
 
 ## Instructions
@@ -21,9 +23,53 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 Consider the differential equation $\frac{dy}{dt} = −ty$ with initial condition $y(−1) = −1$. Using Euler’s method, plot the solution from $t = −1 \text{ to } 3$ with the number of steps $n = 4,~8,~16,~32$, and $64$. Assign each solution a different color and/or line type, and include a legend. At which number of steps do you begin to see an accurate result? What's your criteria for accuracy?
 ```{r}
-# Type your code here (and delete these comments)
-```
+t <- -1
+y <- -1
+df <- data.frame(x = numeric(0), y = numeric(0), set = numeric(0))
 
+diff_eq <- function(t, y) {
+  result <- -t * y
+  return(result)
+}
+
+euler_method <- function(steps) {
+  delta_t <- 4/steps
+  t_vector <- c(t)
+  y_vector <- c(y)
+  for (i in 0:(steps-1)) {
+    y <- y + diff_eq(t, y) * delta_t
+    t <- t + delta_t
+
+    t_vector <- c(t_vector, t)
+    y_vector <- c(y_vector, y)
+  }
+
+  # print(t_vector)
+  print(y_vector)
+
+  step_size_vector <- rep(steps, length(t_vector))
+  df <<- rbind(df, data.frame(x = t_vector, y = y_vector, steps = step_size_vector))
+
+}
+
+lst <- list(4,8,16,32,64)
+for (element in lst) {
+  euler_method(element)
+}
+
+#ykplusone + yk + f(tk, yk)delta(t)
+```
+```{r}
+ggplot(df, aes(x, y, color = factor(steps))) +
+  geom_point(size = 5) +
+  geom_line(aes(group = steps), size = 1) +
+  labs(x = "t", y = "y") +
+  scale_color_manual(values = c("4" = "red", "8" = "blue", "16" = "green", "32" = "purple", "64" = "orange")) +
+  theme_minimal()
+```
+```{r}
+#At steps = 16, the solutions look more accuracte. There's more curvature to the solution, whereas before with only 4 steps, there's more defined over and underestimation of the actual solution.
+```
 
 ## Exercise 2
 
@@ -35,7 +81,18 @@ where $N$ is the carrying capacity and $h$ is the rate of harvesting. The variab
 
 Suppose that $N=100$ and $h=25$. Given an initial population of $p_0 = 80$, what happens to the fish population in the next 10 years? Use the Runge-Kutta method to find a numerical solution. Provide a plot and explain what happens to the population.
 ```{r}
-# Type your code here (and delete these comments)
+n = 100
+h = 25
+
+diff_eq2 <- function(t, p){
+  return ( p*(1 - p/n) - h )
+}
+
+rk4_method <- function(t0, p0){
+
+}
+
+rk4_method(0, 80)
 ```
 
 
