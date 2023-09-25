@@ -1,0 +1,255 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={LAB \#1: Getting Started with R},
+  pdfauthor={Michael Pham},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{LAB \#1: Getting Started with R}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{MATH B210}
+\author{Michael Pham}
+\date{9/18/2023}
+
+\begin{document}
+\maketitle
+
+\hypertarget{instructions}{%
+\subsection{Instructions}\label{instructions}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Read and work through the Lab 1 document.
+\item
+  Complete the exercises below.
+\item
+  Delete these instructions from your final R Markdown document.
+\end{enumerate}
+
+We're going to use the logistic growth function to model the percentage
+of American with cell phone service (The World Bank, 2013).
+\includegraphics{Lab1fig.png}
+
+\hypertarget{exercise-1}{%
+\subsection{Exercise 1}\label{exercise-1}}
+
+Use the commands you have learned to plot the number of Americans with
+cell phone service from 1995 to 2012. On the \(x\)-axis, start with 1995
+as year 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{17}\NormalTok{),}
+  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\FloatTok{12.69}\NormalTok{, }\FloatTok{16.35}\NormalTok{, }\FloatTok{20.29}\NormalTok{, }\FloatTok{25.09}\NormalTok{, }\FloatTok{30.81}\NormalTok{, }\FloatTok{38.75}\NormalTok{, }\FloatTok{45.00}\NormalTok{, }\FloatTok{49.16}\NormalTok{, }\FloatTok{55.15}\NormalTok{, }\FloatTok{62.852}\NormalTok{, }\FloatTok{68.63}\NormalTok{, }\FloatTok{76.64}\NormalTok{, }\FloatTok{82.47}\NormalTok{, }\FloatTok{85.68}\NormalTok{, }\FloatTok{89.14}\NormalTok{, }\FloatTok{91.86}\NormalTok{, }\FloatTok{95.28}\NormalTok{, }\FloatTok{98.17}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{scatter\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Americans with cell phones"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"year (starting 1995)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"americans with cell phones (\%)"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(scatter\_plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Lab01template_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\hypertarget{exercise-2}{%
+\subsection{Exercise 2}\label{exercise-2}}
+
+Given the initial value \(N_0\), intrinsic growth parameter \(r\), and
+carrying capacity \(B\), the logistic model is
+\[N(t) = \dfrac{N_0 B}{N_0 + (B-N_0)e^{-rt}}\] What are reasonable
+choices for \(N_0\) and \(B\)? Why? Create variables N0 and B to reflect
+your choices.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N\_0 }\OtherTok{=} \FloatTok{12.69}
+\NormalTok{B }\OtherTok{=} \DecValTok{100}
+
+\FunctionTok{print}\NormalTok{(}\StringTok{"12.69 is a good N\_0 value because in 1995 (year 0), the percent coverage starts at 12.69\%"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "12.69 is a good N_0 value because in 1995 (year 0), the percent coverage starts at 12.69%"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"100 is a good carrying capacity because the highest \% coverage possible is full, 100\% coverage"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "100 is a good carrying capacity because the highest % coverage possible is full, 100% coverage"
+\end{verbatim}
+
+\hypertarget{exercise-3}{%
+\subsection{Exercise 3}\label{exercise-3}}
+
+Plot the logistic function on the same graph as the previous data using
+the \texttt{lines} function, in various colors (or line types), with
+\(r=0.25,0.27,0.29,0.31\). Which is the best fit for the data?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r\_values }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.27}\NormalTok{, }\FloatTok{0.29}\NormalTok{, }\FloatTok{0.31}\NormalTok{)}
+
+\NormalTok{x\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{18}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
+
+\NormalTok{logistic\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x\_seq, r\_val)\{(N\_0}\SpecialCharTok{*}\NormalTok{B)}\SpecialCharTok{/}\NormalTok{(N\_0 }\SpecialCharTok{+}\NormalTok{ (B}\SpecialCharTok{{-}}\NormalTok{N\_0)}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{r\_val}\SpecialCharTok{*}\NormalTok{x\_seq))\}}
+
+
+\NormalTok{logistic\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (r\_val }\ControlFlowTok{in}\NormalTok{ r\_values) \{}
+\NormalTok{  y\_values }\OtherTok{\textless{}{-}} \FunctionTok{logistic\_model}\NormalTok{(x\_seq, r\_val)}
+\NormalTok{  logistic\_data }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(logistic\_data, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_seq, }\AttributeTok{y =}\NormalTok{ y\_values, }\AttributeTok{r\_value =} \FunctionTok{as.character}\NormalTok{(r\_val)))}
+\NormalTok{\}}
+
+
+\NormalTok{final\_plot }\OtherTok{\textless{}{-}}\NormalTok{ scatter\_plot }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{data =}\NormalTok{ logistic\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{color =}\NormalTok{ r\_value), }\AttributeTok{size =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Americans with cell phones"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"year (starting 1995)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"americans with cell phones (\%)"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(final\_plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Lab01template_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#0.29 seems like the best r value}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise-4}{%
+\subsection{Exercise 4}\label{exercise-4}}
+
+Using your model, what percentage of Americans are expected to have cell
+service in 2013?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predicted\_2013 }\OtherTok{=} \FunctionTok{logistic\_model}\NormalTok{(}\DecValTok{18}\NormalTok{, }\FloatTok{0.29}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(predicted\_2013)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 96.41308
+\end{verbatim}
+
+\end{document}

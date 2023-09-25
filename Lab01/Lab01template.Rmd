@@ -1,15 +1,18 @@
 ---
-title: "LAB #1: Getting Started with R"
-subtitle: MATH B210
-author: Michael Pham
-date: 9/18/2023
-output: 
+title: 'LAB #1: Getting Started with R'
+author: "Michael Pham"
+date: "9/18/2023"
+output:
   html_document:
     theme: cosmo
+  pdf_document: default
+subtitle: MATH B210
 ---
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(ggplot2)
+
 ```
 
 ## Instructions
@@ -24,14 +27,19 @@ We’re going to use the logistic growth function to model the percentage of Ame
 
 Use the commands you have learned to plot the number of Americans with cell phone service from 1995 to 2012. On the $x$-axis, start with 1995 as year 0.
 ```{r}
-# Type your code here (and delete these comments)
-x = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)
-y = c(12.69, 16.35, 20.29, 25.09, 30.81, 38.75, 45.00, 49.16, 55.15, 62.852, 68.63, 76.64, 82.47, 85.68, 89.14, 91.86, 95.28, 98.17)
+data <- data.frame(
+  x = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17),
+  y = c(12.69, 16.35, 20.29, 25.09, 30.81, 38.75, 45.00, 49.16, 55.15, 62.852, 68.63, 76.64, 82.47, 85.68, 89.14, 91.86, 95.28, 98.17)
+)
 
-plot(x, y, 'l', main = "Americans with cell phones", xlab = 'year (starting 1995)', ylab = 'americans with cell phones (%)')
-# NOTE: R will not run any code after the # sign. Text after # are meant to be comments you use to explain what the code is doing. It is good practice to comment each line of code, so that you can refer back to it down the road.
+scatter_plot <- ggplot(data, aes(x, y)) +
+  geom_point() +
+  labs(title = "Americans with cell phones",
+       x = "year (starting 1995)",
+       y = "americans with cell phones (%)")
+
+print(scatter_plot)
 ```
-<Insert any explanations/interpretations in the space after a code chunk. Delete this in your final version.>
 
 ## Exercise 2
 
@@ -42,6 +50,9 @@ Create variables N0 and B to reflect your choices.
 ```{r}
 N_0 = 12.69
 B = 100
+
+print("12.69 is a good N_0 value because in 1995 (year 0), the percent coverage starts at 12.69%")
+print("100 is a good carrying capacity because the highest % coverage possible is full, 100% coverage")
 ```
 
 
@@ -49,22 +60,36 @@ B = 100
 
 Plot the logistic function on the same graph as the previous data using the \texttt{lines} function, in various colors (or line types), with $r=0.25,0.27,0.29,0.31$. Which is the best fit for the data?
 ```{r}
-r0=0.25
-r1=0.27
-r2=0.29
-r3=0.31
+r_values = c(0.25, 0.27, 0.29, 0.31)
 
-y = (N_0*B)/(N_0 + (B-N_0)*exp(-r0*x))
-#x1 = c(0,)
-y1 = (N_0*B)/(N_0 + (B-N_0)*exp(-r1*x1))
+x_seq <- seq(0, 17, by = 0.1)
+
+logistic_model <- function(x_seq, r_val){(N_0*B)/(N_0 + (B-N_0)*exp(-r_val*x_seq))}
 
 
+logistic_data <- data.frame()
+
+for (r_val in r_values) {
+  y_values <- logistic_model(x_seq, r_val)
+  logistic_data <- rbind(logistic_data, data.frame(x = x_seq, y = y_values, r_value = as.character(r_val)))
+}
+
+
+final_plot <- scatter_plot +
+  geom_line(data = logistic_data, aes(x = x, y = y, color = r_value), size = 1) +
+  labs(title = "Americans with cell phones",
+       x = "year (starting 1995)",
+       y = "americans with cell phones (%)")
+
+print(final_plot)
+
+#0.29 seems like the best r value
 ```
-
 
 ## Exercise 4
 
 Using your model, what percentage of Americans are expected to have cell service in 2013?
 ```{r}
-# Type your code here (and delete these comments)
+predicted_2013 = logistic_model(18, 0.29)
+print(predicted_2013)
 ```

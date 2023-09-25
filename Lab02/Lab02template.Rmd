@@ -1,0 +1,68 @@
+---
+title: "LAB #2: Solving Differential Equations"
+subtitle: MATH B210
+author: YOUR FULL NAME HERE
+date: INSERT DATE HERE
+output: 
+  html_document:
+    theme: cosmo
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Instructions
+1. Read and work through the Lab 2 document.
+2. Complete the exercises below.
+3. Delete these instructions from your final R Markdown document.
+
+## Exercise 1
+
+Consider the differential equation $\frac{dy}{dt} = −ty$ with initial condition $y(−1) = −1$. Using Euler’s method, plot the solution from $t = −1 \text{ to } 3$ with the number of steps $n = 4,~8,~16,~32$, and $64$. Assign each solution a different color and/or line type, and include a legend. At which number of steps do you begin to see an accurate result? What's your criteria for accuracy?
+```{r}
+# Type your code here (and delete these comments)
+```
+
+
+## Exercise 2
+
+A population of fish grows based on the logistic model, but is constantly being fished at a rate $h$. This is called the <i>logistic model with constant harvesting</i>. The change in population is given by
+\[
+\frac{dp}{dt} = p\left(1-\frac{p}{N}\right) -h
+\]
+where $N$ is the carrying capacity and $h$ is the rate of harvesting. The variables are the population $p$ of fish and the time $t$ in years.
+
+Suppose that $N=100$ and $h=25$. Given an initial population of $p_0 = 80$, what happens to the fish population in the next 10 years? Use the Runge-Kutta method to find a numerical solution. Provide a plot and explain what happens to the population.
+```{r}
+# Type your code here (and delete these comments)
+```
+
+
+## Exercise 3
+
+To protect the fish population, fishers are restricted to harvesting the fish  in a particular season. Therefore, the rate of harvesting is periodic. The equation for the growth rate becomes
+\[
+\frac{dp}{dt} = p\left(1-\frac{p}{N}\right) -h\frac{1+\sin bt}{2}
+\]
+Suppose that $N = 100$, $h = 5$, and $b = 1$. Use the Runge-Kutta method to find a numerical solution. Plot the solution to this differential equation for $p_0 = 80$. What is the long-term behavior of the fish population? 
+```{r}
+# Type your code here (and delete these comments)
+```
+
+## Exercise 4
+
+Consider the initial-value problem $\displaystyle\frac{dy}{dt}=\frac{1}{(y+1)(t-2)}$ with $y(-2)=0$. The analytical solution for this IVP is
+\[
+y(t) = -1 + \sqrt{1+\ln \left(\frac{(t-2)^2}{16}\right)}
+\]
+
+(a) Plot the analytical solution for the IVP over the interval $t=-2$ to $t=2$. Add to the plot numerical solutions using Euler's Method, with the number of steps $n=64,~128,~256$. Adjust the y-axis limits as needed.
+```{r}
+# Type your code here (and delete these comments)
+```
+(b) Again, plot the analytical solution over the interval $t=-2$ to $t=2$. Now add, the 4th-order Runga-Kutta solutions using $n=100$ and $200$. Adjust the y-axis limits as needed.
+```{r}
+# Type your code here (and delete these comments)
+```
+(c) Comment on your observations of the previous two parts. Do you have any explanation for your observations?
