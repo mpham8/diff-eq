@@ -32,12 +32,12 @@ diff_eq <- function(t, y) {
   return(result)
 }
 
-euler_method <- function(steps) {
+euler_method <- function(steps, diff_func) {
   delta_t <- 4/steps
   t_vector <- c(t)
   y_vector <- c(y)
   for (i in 0:(steps-1)) {
-    y <- y + diff_eq(t, y) * delta_t
+    y <- y + diff_func(t, y) * delta_t
     t <- t + delta_t
 
     t_vector <- c(t_vector, t)
@@ -54,7 +54,7 @@ euler_method <- function(steps) {
 
 lst <- list(4,8,16,32,64)
 for (element in lst) {
-  euler_method(element)
+  euler_method(element, diff_eq)
 }
 
 #ykplusone + yk + f(tk, yk)delta(t)
@@ -164,10 +164,75 @@ y(t) = -1 + \sqrt{1+\ln \left(\frac{(t-2)^2}{16}\right)}
 
 (a) Plot the analytical solution for the IVP over the interval $t=-2$ to $t=2$. Add to the plot numerical solutions using Euler's Method, with the number of steps $n=64,~128,~256$. Adjust the y-axis limits as needed.
 ```{r}
-# Type your code here (and delete these comments)
+diff_eq4 <- function(t,y) {
+  return( 1/((y+1)*(t-2)) )
+}
+
+solution <- function(t) {
+  return ( -1 + sqrt(1 + log(((t-2)^2))/16) )
+}
+
+euler_method2 <- function(t, y, steps, end, diff_func) {
+  step_size <- (end-t)/steps
+  
+  t_vector <- vector("numeric", length = 0)
+  y_vector <- vector("numeric", length = 0)
+
+  for (i in seq(t, end, by = step_size)) {
+    y_vector <- c(y_vector, y)
+    t_vector <- c(t_vector, t)
+
+    y <- y + step_size * diff_func(t, y)
+    t <- t + step_size
+  }
+  return (list(y = y_vector, t = t_vector))
+
+}
+
+
+
+lst <- list(4,8,16,32,64)
+df <- data.frame(x = numeric(0), y = numeric(0), set = numeric(0))
+
+for (element in lst) {
+  list <- euler_method2(-2, 0, element, 2, diff_eq4)
+  df <- rbind(df, data.frame(x = list$t, y = list$y, set = rep(element, length(list$t))))
+}
+
+
+t <- seq(-2, 2, by = 0.01)
+y <- sapply(t, solution)
+
+df <- rbind(df, data.frame(x = t, y = y, set = rep("real", length(t))))
+
+
+print(df)
+
+ggplot(df, aes(x, y, color = factor(set))) +
+  geom_point(size = 5) +
+  geom_line(aes(group = set), size = 1) +
+  labs(x = "t", y = "y") +
+  scale_color_manual(values = c("4" = "red", "8" = "blue", "16" = "green", "32" = "purple", "64" = "orange", "real" = "violet")) +
+  theme_minimal()
 ```
 (b) Again, plot the analytical solution over the interval $t=-2$ to $t=2$. Now add, the 4th-order Runga-Kutta solutions using $n=100$ and $200$. Adjust the y-axis limits as needed.
 ```{r}
-# Type your code here (and delete these comments)
+
+list <- rk4_method(-2, 0, 100, 4, diff_eq4)
+df <- rbind(df, data.frame(x = list$t, y = list$p, set = rep("rk4-100", length(list$t))))
+list <- rk4_method(-2, 0, 200, 4, diff_eq4)
+df <- rbind(df, data.frame(x = list$t, y = list$p, set = rep("rk4-200", length(list$t))))
+
+ggplot(df, aes(x, y, color = factor(set))) +
+  geom_point(size = 5) +
+  geom_line(aes(group = set), size = 1) +
+  labs(x = "t", y = "y") +
+  scale_y_continuous(limits = c(-5, 1)) + 
+  scale_color_manual(values = c("4" = "red", "8" = "blue", "16" = "green", "32" = "purple", "64" = "orange", "real" = "violet", "rk4-100" = "#1f9ab9", "rk4-200" = "#2a6776")) +
+  theme_minimal()
 ```
 (c) Comment on your observations of the previous two parts. Do you have any explanation for your observations?
+
+```{r}
+#Even though the given solution is a pretty continous line, the solution obtained from Euler's and RK jump all over the place with big discrete jumps rather than smooth derivative changes. For Euler's a high step count of 64 resulted in the solution most closely matching the real provided solution. For RK method, a bigger step size resulted in a less accurate solution graph. Also, RK with step size of 100 did not do better than Euler with only a step size of 64.
+```
