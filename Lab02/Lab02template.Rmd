@@ -81,20 +81,50 @@ where $N$ is the carrying capacity and $h$ is the rate of harvesting. The variab
 
 Suppose that $N=100$ and $h=25$. Given an initial population of $p_0 = 80$, what happens to the fish population in the next 10 years? Use the Runge-Kutta method to find a numerical solution. Provide a plot and explain what happens to the population.
 ```{r}
-n = 100
-h = 25
-
 diff_eq2 <- function(t, p){
-  return ( p*(1 - p/n) - h )
+  return ( p*(1 - p/100) - 25 )
 }
 
-rk4_method <- function(t0, p0){
+rk4_method <- function(t, p, steps, interval, diff_func){
+  t_vector <- vector("numeric", length = 0)
+  p_vector <- vector("numeric", length = 0)
+  
+  delta_t = interval/steps
+  
+  for (i in 0:(steps-1)) {
+    t_vector <- c(t_vector, t)
 
+    t_mid <- t + delta_t/2
+
+    mk <- diff_func(t, p)
+    nk <- diff_func(t_mid, p + mk*(delta_t/2))
+    qk <- diff_func(t_mid, p + nk*(delta_t/2))
+
+    t <- t + delta_t
+    pk <- diff_func(t, p + qk*delta_t)
+
+    p <- p + ((mk + 2*nk + 2*qk + pk)/6) * delta_t
+
+    p_vector <- c(p_vector, p)
+  }
+  return (list(t = t_vector, p = p_vector))
 }
 
-rk4_method(0, 80)
+list <- rk4_method(0, 80, 100, 10, diff_eq2)
+print(list$t)
+print(list$p)
 ```
 
+```{r}
+data <- data.frame(t = list$t, p = list$p)
+  ggplot(data, aes(x = t, y = p)) +
+    geom_point() +
+    geom_line() +
+    labs(x = "Time (years)", y = "Population", title = "Scatter Plot of Fish Population Solution")
+```
+```{r}
+#The population decreases but at a slower and slower rate
+```
 
 ## Exercise 3
 
@@ -104,7 +134,25 @@ To protect the fish population, fishers are restricted to harvesting the fish  i
 \]
 Suppose that $N = 100$, $h = 5$, and $b = 1$. Use the Runge-Kutta method to find a numerical solution. Plot the solution to this differential equation for $p_0 = 80$. What is the long-term behavior of the fish population? 
 ```{r}
-# Type your code here (and delete these comments)
+diff_eq3 <- function(t, p){
+  return ( p*(1 - p/100) - 5*((1+sin(t))/2) )
+}
+
+list <- rk4_method(0, 80, 100, 10, diff_eq3)
+print(list$t)
+print(list$p)
+
+data <- data.frame(t = list$t, p = list$p)
+  ggplot(data, aes(x = t, y = p)) +
+    geom_point() +
+    geom_line() +
+    labs(x = "Time (years)", y = "Population", title = "Scatter Plot of Fish Population Solution")
+
+```
+
+```{r}
+#The population increases but then the sinosoidal rate of change in the second term starts to take over after about 5 years when the population gets close to the carrying capacity. After this, the fish population will fluctuate sinosoidally in the ~96 to ~99 range.
+
 ```
 
 ## Exercise 4
