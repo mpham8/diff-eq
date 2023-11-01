@@ -1,0 +1,313 @@
+---
+title: "HW #5/LAB #3: Systems of Differential Equations"
+subtitle: MATH B210
+author: Michael Vinh Pham
+date: Halloweekend
+output: 
+  html_document:
+    theme: cosmo
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library('pracma')
+#library('rk4sys')
+```
+
+# Lab
+
+## Exercise 1
+
+Recall the predator-prey model. Assume $x$ represents the prey and $y$ the predator population over time. Consider the following system:
+\[
+\begin{aligned}
+\frac{dx}{dt} = 2x-1.2xy\\\frac{dy}{dt}=-y+0.9xy.
+\end{aligned}
+\]
+
+(a) Create a phase plane for this differential equation with $x$ and $y$ between 0 and 5, with arrows spaced in intervals of 0.5. You may want to adjust the parameter <b>scale</b> if the arrows are too large.
+```{r}
+#Define the differential equations
+dxdt = function(x,y) 2*x-1.2*x*y
+dydt = function(x,y) -y + 0.9 * x * y
+#Define x, y points for arrows to appear
+x = seq(0, 5, 0.5)
+y = seq(0, 5, 0.5)
+#Create blank matrices
+xmatrix = matrix(nrow = length(x), ncol = length(y))
+ymatrix = matrix(nrow = length(x), ncol = length(y))
+xprime = matrix(nrow = length(x), ncol = length(y))
+yprime = matrix(nrow = length(x), ncol = length(y))
+#Use for loops to define the (x,y) coordinate and derivatives of vectors
+for(i in 1:length(x)){
+  for(j in 1:length(y) ){
+    xmatrix[i,j] = x[i]
+    ymatrix[i,j] = y[j]
+    xprime[i,j] = dxdt(x[i], y[j])
+    yprime[i,j] = dydt(x[i], y[j])
+  }
+}
+#Create a blank plot and use quiver to add a phase plane
+plot(x,y, type = 'n', xlim = c(0,5), ylim = c(0,5), xlab = "Prey (x)", ylab = "Predator(y)")
+quiver(xmatrix, ymatrix, xprime, yprime, scale = 0.1)
+
+```
+
+(b) Using <b>rk4sys</b>, plot the solution to the system of differential equations for three different initial conditions (your choice!). What happens to the predator and prey populations long term, depending on the initial conditions?
+
+Long term, for all 3 initial conditions, it follows a cycle where when there's a lot of prey then the predators thrive until there's so many predators and so little prey that the predators die off and then the prey thrive and we end up in the same place as the inital condition. It's interesting how the inital conditions (1,1) and (2,2) have similar cycles, whereas the cycle for (3,5) involves both periods with more predator and prey and also periods with less predator and prey that the former 2 initial conditions.
+
+```{r}
+#Define a system of differential equations
+f = function(t, u){
+  x = u[1]
+  y = u[2]
+  dxdt = 2*x-1.2*x*y
+  dydt = -y + 0.9 * x * y
+  return(c(dxdt,dydt))
+}
+#Choose a time range
+tmin = 0
+tmax = 10
+# Plot the first numerical solution
+y0 = c(2, 2)  # Initial conditions for x (prey) and y (predator)
+sol = rk4sys(f, tmin, tmax, y0, n = 100)
+names(sol)[2] = 'Y'
+x = sol$Y[, 1]
+y = sol$Y[, 2]
+a = plot(x, y, type = "l", col = "blue", xlab = "Prey (x)", ylab = "Predator (y)", 
+  xlim = c(0, 6), ylim = c(0, 6))
+
+# Plot the second numerical solution
+y0 = c(1, 1)  # Different initial conditions
+sol = rk4sys(f, tmin, tmax, y0, n = 100)
+names(sol)[2] = 'Y'
+x = sol$Y[, 1]
+y = sol$Y[, 2]
+lines(x, y, col = "red")
+
+# Plot the third numerical solution
+y0 = c(3, 5)  # Another set of initial conditions
+sol = rk4sys(f, tmin, tmax, y0, n = 100)
+names(sol)[2] = 'Y'
+x = sol$Y[, 1]
+y = sol$Y[, 2]
+lines(x, y, col = "green")
+
+# Add a legend to distinguish the three solutions
+legend("topright", legend = c("y0 = (1,1)", "y0 = (2,2))", "y0 = (3,5)"),
+       col = c("blue", "red", "green"), lty = 1)
+
+```
+
+## Exercise 2
+
+In the standard predator-prey model, if there are no predators, the prey population will increase exponentially. However, this is not realistic, since populations have a carrying capacity due to limited resources. Therefore, we can construct a modified predator-prey model:
+\[
+\begin{aligned}
+\frac{dx}{dt} = 2x\left(1-\frac{x}{2}\right)-1.2xy\\\frac{dy}{dt}=-y+0.9xy.
+\end{aligned}
+\]
+
+(a) Create a phase plane for this differential equation with $x$ and $y$ between 0 and 5, with arrows spaced in intervals of 0.5. You may want to adjust the parameter <b>scale</b> if the arrows are too large.
+```{r}
+#Define the differential equations
+dxdt = function(x,y) 2*x * (1-x/2) -1.2 * x* y
+dydt = function(x,y) -y + 0.9 * x * y
+#Define x, y points for arrows to appear
+x = seq(0, 5, 0.5)
+y = seq(0, 5, 0.5)
+#Create blank matrices
+xmatrix = matrix(nrow = length(x), ncol = length(y))
+ymatrix = matrix(nrow = length(x), ncol = length(y))
+xprime = matrix(nrow = length(x), ncol = length(y))
+yprime = matrix(nrow = length(x), ncol = length(y))
+#Use for loops to define the (x,y) coordinate and derivatives of vectors
+for(i in 1:length(x)){
+  for(j in 1:length(y) ){
+    xmatrix[i,j] = x[i]
+    ymatrix[i,j] = y[j]
+    xprime[i,j] = dxdt(x[i], y[j])
+    yprime[i,j] = dydt(x[i], y[j])
+  }
+}
+#Create a blank plot and use quiver to add a phase plane
+plot(x,y, type = 'n', xlim = c(0,5), ylim = c(0,5), xlab = "x", ylab = "y")
+quiver(xmatrix, ymatrix, xprime, yprime, scale = 0.05)
+```
+
+(b) Using <b>rk4sys</b>, plot the solution to the system of differential equations for three different initial conditions (your choice!). What happens to the predator and prey populations long term, depending on the initial conditions?
+Regardless of initial condition, both the predator and prey populations of all 3 initial conditions converge to the same point (roughly 1, 1)
+```{r}
+#Define a system of differential equations
+f = function(t, u){
+  x = u[1]
+  y = u[2]
+  dxdt = 2*x * (1-x/2) - 1.2 * x* y
+  dydt = -y + 0.9 * x * y
+  return(c(dxdt,dydt))
+}
+#Choose a time range
+tmin = 0
+tmax = 25
+# Plot the first numerical solution
+y0 = c(2, 2)  # Initial conditions for x (prey) and y (predator)
+sol = rk4sys(f, tmin, tmax, y0, n = 100)
+names(sol)[2] = 'Y'
+x = sol$Y[, 1]
+y = sol$Y[, 2]
+a = plot(x, y, type = "l", col = "blue", xlab = "Prey (x)", ylab = "Predator (y)", 
+  xlim = c(0, 6), ylim = c(0, 6))
+
+# Plot the second numerical solution
+y0 = c(1, 1)  # Different initial conditions
+sol = rk4sys(f, tmin, tmax, y0, n = 100)
+names(sol)[2] = 'Y'
+x = sol$Y[, 1]
+y = sol$Y[, 2]
+lines(x, y, col = "red")
+
+# Plot the third numerical solution
+y0 = c(3, 5)  # Another set of initial conditions
+sol = rk4sys(f, tmin, tmax, y0, n = 100)
+names(sol)[2] = 'Y'
+x = sol$Y[, 1]
+y = sol$Y[, 2]
+lines(x, y, col = "green")
+
+# Add a legend to distinguish the three solutions
+legend("topright", legend = c("y0 = (1,1)", "y0 = (2,2))", "y0 = (3,5)"),
+       col = c("blue", "red", "green"), lty = 1)
+```
+
+(c) Using the information from Parts (a) and (b), how does the modified predator-prey model (with logistic prey growth) differ from the standard predator-prey model from Exercise 1? That is, how do the dynamics and long-term behavior change?
+The standard model follows a cycle where both predator and prey rise and fall just to reach the same point they started at, where as the model with logistic prey growth converges to an eliquilbrium point since the prey population stabilizes to an equilibrium/carrying capcity and the predator population which relies on prey popualtion also approaches a stable equilibrium point.
+
+
+# Problems
+
+## Exercise 3
+
+(a)
+```{r}
+#Define the differential equations
+dsdt = function(S, I, R) -0.25*I*S
+didt = function(S, I, R) 0.25*I*S - 0.1*I
+drdt = function(S, I, R) 0.1*I
+#Define x, y points for arrows to appear
+x = seq(0, 1, 0.08)
+y = seq(0, 1, 0.08)
+#Create blank matrices
+xmatrix = matrix(nrow = length(x), ncol = length(y))
+ymatrix = matrix(nrow = length(x), ncol = length(y))
+xprime = matrix(nrow = length(x), ncol = length(y))
+yprime = matrix(nrow = length(x), ncol = length(y))
+#Use for loops to define the (x,y) coordinate and derivatives of vectors
+for(i in 1:length(x)){
+  for(j in 1:length(y) ){
+    xmatrix[i,j] = x[i]
+    ymatrix[i,j] = y[j]
+    xprime[i,j] = dsdt(x[i], y[j])
+    yprime[i,j] = didt(x[i], y[j])
+  }
+}
+#Create a blank plot and use quiver to add a phase plane
+plot(x,y, type = 'n', xlim = c(0,1), ylim = c(0,1), xlab = "S", ylab = "I")
+quiver(xmatrix, ymatrix, xprime, yprime, scale = 0.5)
+```
+
+(b)
+```{r}
+#Define a system of differential equations
+f = function(t, u){
+  S = u[1]
+  I = u[2]
+  R = u[3]
+  dsdt = -0.25*I*S
+  didt = 0.25*I*S - 0.1*I
+  drdt = 0.1*I
+  return(c(dsdt,didt,drdt))
+}
+#Choose a time range
+tmin = 0
+tmax = 200
+# Plot the first numerical solution
+y0 = c(0.9, 0.01, 0)  # Initial conditions for x (prey) and y (predator)
+sol = rk4sys(f, tmin, tmax, y0, n = 1000)
+names(sol)[2] = 'Y'
+S = sol$Y[, 1]
+I = sol$Y[, 2]
+R = sol$Y[, 3]
+a = plot(S, I, type = "l", col = "blue", xlab = "Sus", ylab = "Infected", 
+  xlim = c(0, 1), ylim = c(0, 1))
+
+colors <- c("red", "blue", "green", "orange", "purple", "cyan", "magenta", "brown", "red")
+j <- 1
+
+for (i in seq(0.1, 0.9, by = 0.1)) {
+  y0 = c(i, 0.01, 0)
+  sol = rk4sys(f, tmin, tmax, y0, n = 1000)
+  names(sol)[2] = 'Y'
+  S = sol$Y[, 1]
+  I = sol$Y[, 2]
+  R = sol$Y[, 3]
+  lines(S, I, col = colors[j])
+  j <- j + 1
+}
+
+# # Plot the third numerical solution
+# y0 = c(3, 5)  # Another set of initial conditions
+# sol = rk4sys(f, tmin, tmax, y0, n = 100)
+# names(sol)[2] = 'Y'
+# x = sol$Y[, 1]
+# y = sol$Y[, 2]
+# lines(x, y, col = "green")
+
+# # Add a legend to distinguish the three solutions
+legend("topright", legend = c("0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9"),
+       col = colors, lty = 1)
+```
+
+
+## Exercise 4
+
+```{r}
+alpha = 0.25
+beta = 0.1
+gamma = 0.5
+zeta = 0.25
+
+s0 = 0.99
+e0 = 0
+i0 = 0.01
+r0 = 0
+
+y = c(s0, e0, i0, r0)
+tmin = 0
+tmax = 365
+
+f = function(t,Y){
+  S = Y[1]
+  E = Y[2]
+  I = Y[3]
+  R = Y[4]
+  
+  
+  dsdt = -alpha*S*I + gamma*R
+  dedt = alpha*S*I - zeta*E
+  didt = zeta*E - beta*I
+  drdt = beta*I - gamma*R
+  return(c(dsdt, dedt, didt, drdt))
+}
+
+sol = rk4sys(f, tmin, tmax, y0, n = 1000)
+names(sol)[2] = 'Y'
+S = sol$Y[, 1]
+E = sol$Y[, 2]
+I = sol$Y[, 3]
+R = sol$Y[, 4]
+a = plot(S, I, type = "l", col = "blue", xlab = "Sus", ylab = "Infected", 
+  xlim = c(0, 1), ylim = c(0, 1))
+# Type your code here (and delete this comment)
+```
